@@ -99,19 +99,7 @@ router.get('/categories', function (req, res) {
 });
 
 router.post('/categories', function (req, res) {
-<<<<<<< HEAD
     var category = req.body.category;
-    Category.create({ name: category.name, isRoot: true }, function (err, categories) {
-        if(err){
-            throw err;
-        }
-        else{
-            console.log(categories);
-            res.json(categories[0]);
-=======
-    console.log(req.body);
-    var category = req.body.category;
-
     Category.create({ name: category.name, isRoot: true }, function (err, categories) {
         if (err) {
             throw err;
@@ -130,7 +118,6 @@ router.delete('/categories', function (req, res) {
         }
         else {
             res.json({ status: 200 });
->>>>>>> 3992138172ab063770dc7ab16703ea3531222174
         }
     })
 })
