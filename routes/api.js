@@ -63,6 +63,32 @@ router.get('/dashboard', passport.authenticate('jwt', { session: false }), funct
     res.send('It worked! User id is: ' + req.user._id + '.');
 })
 
+router.post('/products', passport.authenticate('jwt', { session: false }), function (req, res) {
+    var data = req.body.product;
+    console.log(data);
+    Category.findOne({ name: data.category }, function (err, category) {
+        var product = new Product();
+        product.name = data.name;
+        product.description = data.description;
+        product.price = data.price;
+        product.quantity = data.quantity;
+        if (err) {
+            throw err;
+        }
+        if (!category) {
+            res.json({ data: { success: false, message: "category is required" } });
+        }
+        product.category = category;
+
+        product.save(function (err, product) {
+            if (err) {
+                throw err;
+            }
+            res.json({ data: { success: true, message: "product saved successfuly" } });
+        })
+    })
+});
+
 router.get('/products/', passport.authenticate('jwt', { session: false }), function (req, res) {
     Product.find(function (err, data) {
         if (err) {
@@ -72,7 +98,7 @@ router.get('/products/', passport.authenticate('jwt', { session: false }), funct
             res.json({ data: data });
         }
     });
-})
+});
 
 router.get('/products/:category', passport.authenticate('jwt', { session: false }), function (req, res) {
     var category = req.params.category;
@@ -99,9 +125,7 @@ router.get('/categories', function (req, res) {
 });
 
 router.post('/categories', function (req, res) {
-    console.log(req.body);
     var category = req.body.category;
-
     Category.create({ name: category.name, isRoot: true }, function (err, categories) {
         if (err) {
             throw err;
