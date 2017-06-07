@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 var User = require('./models/user');
 var db = mongoose.connect('mongodb://localhost/prac_shop');
 
-var testUserDetails = { firstName: 'test', lastName: 'user', email: 'user@test.com', password: 'password' };
+var testUserDetails = { firstName: 'merchant', lastName: 'one', email: 'mone@test.com', password: 'password', role:'merchant' };
 
 createTestUser(testUserDetails);
 

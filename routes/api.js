@@ -53,7 +53,7 @@ router.post('/login', function (req, res) {
             }
             else {
                 var token = jwt.sign(user, "secret", { expiresIn: 10080 });
-                res.json({ success: true, token: 'JWT ' + token });
+                res.json({ success: true, token: 'JWT ' + token, role: user.role });
             }
         }
     })
